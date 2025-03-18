@@ -1,6 +1,15 @@
 from tkinter import *
+import pandas
+import random
 
 BACKGROUND_COLOR = "#B1DDC6"
+
+data = pandas.read_csv("data/french_words.csv")
+to_learn = data.to_dict(orient="records")
+
+def next_card():
+    current_card = random.choice(to_learn)
+    print(current_card["French"])
 
 window = Tk()
 window.title("IWontForget")
@@ -15,11 +24,11 @@ canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(row=0, column=0, columnspan=2)
 
 cross_image = PhotoImage(file="images/wrong.png")
-unknown_button = Button(image=cross_image, highlightthickness=0, border=0)
+unknown_button = Button(image=cross_image, highlightthickness=0, border=0, command=next_card)
 unknown_button.grid(row=1, column=0)
 
 check_image = PhotoImage(file="images/right.png")
-know_button = Button(image=check_image, highlightthickness=0, border=0)
+know_button = Button(image=check_image, highlightthickness=0, border=0, command=next_card)
 know_button.grid(row=1, column=1)
 
 
